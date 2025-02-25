@@ -74,8 +74,23 @@
             document.getElementById("message").style.display = "block";
 
             // Klick-Zähler erhöhen
-            let count = localStorage.getItem("clickCounter") || 47;
-            count++;
+            let count = localStorage.getItem("clickCounter");
+
+            if (!count) {
+                let date = new Date();
+                let hours = date.getHours();  // Stundenzahl (0-23)
+                let minutes = date.getMinutes();  // Minuten (0-59)
+
+                // Berechne die Minuten, die seit 9:00 Uhr vergangen sind
+                let minutesSince9 = (hours - 9) * 60 + minutes;
+
+                // Berechne die Anzahl der 6-Minuten-Intervalle seit 9:00 Uhr
+                // Wenn vor 9:00 Uhr, setze mindestens 13
+                count = Math.max(13, 13 + Math.floor(minutesSince9 / 6));  // Sicherstellen, dass der Zähler mindestens bei 13 startet
+                localStorage.setItem("clickCounter", count);
+            }
+
+            count++; // Erhöhe den Zähler
             localStorage.setItem("clickCounter", count);
             localStorage.setItem("lastClickDate", today); // Speichert das heutige Datum
             document.getElementById("clickCount").textContent = count;
@@ -83,7 +98,22 @@
 
         // Beim Laden die gespeicherte Anzahl setzen
         document.addEventListener("DOMContentLoaded", function() {
-            let count = localStorage.getItem("clickCounter") || 47;
+            let count = localStorage.getItem("clickCounter");
+
+            if (!count) {
+                let date = new Date();
+                let hours = date.getHours();  // Stundenzahl (0-23)
+                let minutes = date.getMinutes();  // Minuten (0-59)
+
+                // Berechne die Minuten, die seit 9:00 Uhr vergangen sind
+                let minutesSince9 = (hours - 9) * 60 + minutes;
+
+                // Berechne die Anzahl der 6-Minuten-Intervalle seit 9:00 Uhr
+                // Wenn vor 9:00 Uhr, setze mindestens 13
+                count = Math.max(13, 13 + Math.floor(minutesSince9 / 6));  // Sicherstellen, dass der Zähler mindestens bei 13 startet
+                localStorage.setItem("clickCounter", count);
+            }
+
             document.getElementById("clickCount").textContent = count;
         });
     </script>
