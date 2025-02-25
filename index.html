@@ -56,19 +56,28 @@
         <h1>🎉 Glückwunsch! 🎉</h1>
         <p>Du hast einen exklusiven Gutschein für ein <strong>Freibier</strong> gewonnen!</p>
         <p>Um dein Bier zu erhalten, klicke auf den Button und zeige den Code an der Theke.</p>
-        <button class="btn" onclick="showMessage()">Gutschein anzeigen</button>
+        <button class="btn" id="gutscheinBtn" onclick="showMessage()">Gutschein anzeigen</button>
         <p class="hidden-message" id="message">Helau! Alaaf! Leider nur Spaß – aber du bist jetzt offiziell Jeck des Tages! 🥳</p>
         <p class="counter">Schon <span id="clickCount">0</span> Leute wollten Freibier! 🍻</p>
     </div>
 
     <script>
         function showMessage() {
+            let today = new Date().toISOString().split("T")[0]; // Heutiges Datum als YYYY-MM-DD
+            let lastClick = localStorage.getItem("lastClickDate");
+
+            if (lastClick === today) {
+                alert("Du kannst nur einmal pro Tag klicken! 😉");
+                return;
+            }
+
             document.getElementById("message").style.display = "block";
 
             // Klick-Zähler erhöhen
             let count = localStorage.getItem("clickCounter") || 0;
             count++;
             localStorage.setItem("clickCounter", count);
+            localStorage.setItem("lastClickDate", today); // Speichert das heutige Datum
             document.getElementById("clickCount").textContent = count;
         }
 
