@@ -74,7 +74,7 @@
             document.getElementById("message").style.display = "block";
 
             // Klick-Zähler erhöhen
-            let count = localStorage.getItem("clickCounter") || 0;
+            let count = localStorage.getItem("clickCounter") || 47;
             count++;
             localStorage.setItem("clickCounter", count);
             localStorage.setItem("lastClickDate", today); // Speichert das heutige Datum
@@ -83,7 +83,7 @@
 
         // Beim Laden die gespeicherte Anzahl setzen
         document.addEventListener("DOMContentLoaded", function() {
-            let count = localStorage.getItem("clickCounter") || 0;
+            let count = localStorage.getItem("clickCounter") || 47;
             document.getElementById("clickCount").textContent = count;
         });
     </script>
